@@ -1,8 +1,8 @@
-import defer * as ExtendedMapModule from "./extended-map";
+import type { ExtendedMap as ExtendedMapType } from "./extended-map";
 
-export function intersectionWithMap<K, V>(map1: Map<K, V>, map2: Map<K, V>): ExtendedMapModule.ExtendedMap<K, V> {
-  const { ExtendedMap } = ExtendedMapModule;
-  const result = new ExtendedMap();
+export function intersectionWithMap<K, V>(map1: Map<K, V>, map2: Map<K, V>): ExtendedMapType<K, V> {
+  const { ExtendedMap } = require("./extended-map") as typeof import("./extended-map");
+  const result = new ExtendedMap<K, V>();
   for (const [key, value] of map1) {
     if (map2.has(key) && map2.get(key) === value) {
       result.set(key, value);

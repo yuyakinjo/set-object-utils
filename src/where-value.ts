@@ -1,7 +1,8 @@
-export function whereValue<K, V>(map: Map<K, V>, predicate: (value: V) => boolean): any {
-  // Import ExtendedMap dynamically to avoid circular dependency
-  const { ExtendedMap } = require("./extended-map");
-  const result = new ExtendedMap();
+import type { ExtendedMap as ExtendedMapType } from "./extended-map";
+
+export function whereValue<K, V>(map: Map<K, V>, predicate: (value: V) => boolean): ExtendedMapType<K, V> {
+  const { ExtendedMap } = require("./extended-map") as typeof import("./extended-map");
+  const result = new ExtendedMap<K, V>();
   for (const [key, value] of map) {
     if (predicate(value)) {
       result.set(key, value);
