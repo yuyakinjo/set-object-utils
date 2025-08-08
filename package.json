@@ -1,14 +1,38 @@
 {
   "name": "set_object_utils",
+  "version": "1.0.0",
+  "description": "Utility library providing set operations on Map keys and values",
+  "main": "index.ts",
   "module": "index.ts",
   "type": "module",
+  "keywords": [
+    "map",
+    "set",
+    "operations",
+    "typescript",
+    "utilities"
+  ],
+  "author": "",
+  "license": "MIT",
   "devDependencies": {
+    "@biomejs/biome": "^2.1.4",
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.2"
   },
   "scripts": {
-    "test": "bun test"
-  }
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "example": "bun run index.ts",
+    "benchmark": "bun run benchmark.ts"
+  },
+  "files": [
+    "index.ts",
+    "README.md"
+  ]
 }
