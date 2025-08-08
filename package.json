@@ -29,7 +29,7 @@
     "format": "biome format --write .",
     "typecheck": "tsc --noEmit",
     "example": "bun run index.ts",
-    "benchmark": "bun run benchmark.ts"
+    "benchmark": "bun run benchmark/index.ts"
   },
   "files": [
     "index.ts",
