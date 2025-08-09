@@ -3,10 +3,13 @@ name: Lint
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
   # Allow manual trigger
   workflow_dispatch:
+
+# Cancel in-progress runs when a new run is started
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
@@ -25,8 +28,10 @@ jobs:
       - name: Cache Bun dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-lint-${{ hashFiles('**/bun.lock') }}
+          path: |
+            ~/.bun/install/cache
+            node_modules
+          key: ${{ runner.os }}-bun-lint-${{ hashFiles('bun.lockb') }}
           restore-keys: |
             ${{ runner.os }}-bun-lint-
             ${{ runner.os }}-bun-
@@ -38,7 +43,7 @@ jobs:
         run: bun run lint
 
       - name: Check code formatting
-        run: biome format --check .
+        run: bun run format
 
       - name: Type check
         run: bun run typecheck
