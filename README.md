@@ -1,7 +1,7 @@
 # ExtendedMap - Set Operations for JavaScript Map
 
-![CI](https://github.com/t00234/set-object-utils/workflows/CI/badge.svg)
-![Lint](https://github.com/t00234/set-object-utils/workflows/Lint/badge.svg)
+![CI](https://github.com/yuyakinjo/set-object-utils/workflows/CI/badge.svg)
+![Lint](https://github.com/yuyakinjo/set-object-utils/workflows/Lint/badge.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)
 ![Bun](https://img.shields.io/badge/Bun-Compatible-orange.svg)
 
