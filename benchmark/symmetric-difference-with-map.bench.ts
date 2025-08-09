@@ -1,31 +1,30 @@
 import { symmetricDifferenceWithMap } from "../index.ts";
 import {
+  type BenchmarkResult,
   benchmark,
   dataSizes,
   formatResults,
   generateTestData,
-  type BenchmarkResult,
-  type BenchmarkConfig,
 } from "./utils.ts";
 
 // Native symmetric difference implementation for comparison
 function nativeSymmetricDifference<K, V>(map1: Map<K, V>, map2: Map<K, V>): Map<K, V> {
   const result = new Map<K, V>();
-  
+
   // Add items from map1 that are not in map2 or have different values
   for (const [key, value] of map1) {
     if (!map2.has(key) || map2.get(key) !== value) {
       result.set(key, value);
     }
   }
-  
+
   // Add items from map2 that are not in map1 or have different values
   for (const [key, value] of map2) {
     if (!map1.has(key) || map1.get(key) !== value) {
       result.set(key, value);
     }
   }
-  
+
   return result;
 }
 
@@ -33,7 +32,9 @@ export function run(): void {
   console.log("🔄 Running Symmetric Difference With Map Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
-    console.log(`📊 Benchmarking symmetricDifferenceWithMap with ${name} dataset (${size} items, ${iterations} iterations):`);
+    console.log(
+      `📊 Benchmarking symmetricDifferenceWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+    );
 
     const testData = generateTestData(size);
     const { map1, map2, extMap1, extMap2 } = testData;

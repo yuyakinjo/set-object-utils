@@ -1,42 +1,42 @@
 /**
  * Modular Benchmark Runner
- * 
+ *
  * This script runs all individual benchmark modules in sequence.
  * Each benchmark module focuses on testing a specific function or operation
  * comparing ExtendedMap methods vs standalone functions vs native implementations.
  */
 
-import * as intersectionBench from "./intersection-with-map.bench.ts";
-import * as unionBench from "./union-with-map.bench.ts";
 import * as differenceBench from "./difference-with-map.bench.ts";
-import * as symmetricDifferenceBench from "./symmetric-difference-with-map.bench.ts";
+import * as extendedMapBench from "./extended-map.bench.ts";
+import * as intersectionBench from "./intersection-with-map.bench.ts";
+import * as isDisjointFromBench from "./is-disjoint-from-with-map.bench.ts";
 import * as isSubsetOfBench from "./is-subset-of-with-map.bench.ts";
 import * as isSupersetOfBench from "./is-superset-of-with-map.bench.ts";
-import * as isDisjointFromBench from "./is-disjoint-from-with-map.bench.ts";
+import * as symmetricDifferenceBench from "./symmetric-difference-with-map.bench.ts";
 import * as toObjectBench from "./to-object.bench.ts";
+import * as unionBench from "./union-with-map.bench.ts";
 import * as whereKeyBench from "./where-key.bench.ts";
 import * as whereValueBench from "./where-value.bench.ts";
-import * as extendedMapBench from "./extended-map.bench.ts";
 
 console.log("🚀 Starting Modular ExtendedMap Performance Benchmarks\n");
 console.log("Comparing ExtendedMap operations vs native Map operations");
 console.log("Data sizes: small (10), medium (1000), large (100000)\n");
-console.log("=" .repeat(120));
+console.log("=".repeat(120));
 
 // Set Operations Benchmarks
 console.log("\n📊 SET OPERATIONS BENCHMARKS");
-console.log("=" .repeat(120));
+console.log("=".repeat(120));
 
 try {
   intersectionBench.run();
   console.log("=".repeat(120));
-  
+
   unionBench.run();
   console.log("=".repeat(120));
-  
+
   differenceBench.run();
   console.log("=".repeat(120));
-  
+
   symmetricDifferenceBench.run();
   console.log("=".repeat(120));
 } catch (error) {
@@ -50,10 +50,10 @@ console.log("=".repeat(120));
 try {
   isSubsetOfBench.run();
   console.log("=".repeat(120));
-  
+
   isSupersetOfBench.run();
   console.log("=".repeat(120));
-  
+
   isDisjointFromBench.run();
   console.log("=".repeat(120));
 } catch (error) {
@@ -67,7 +67,7 @@ console.log("=".repeat(120));
 try {
   whereKeyBench.run();
   console.log("=".repeat(120));
-  
+
   whereValueBench.run();
   console.log("=".repeat(120));
 } catch (error) {

@@ -1,12 +1,11 @@
 import { toObject } from "../index.ts";
 import {
+  type BenchmarkResult,
   benchmark,
   dataSizes,
   formatResults,
   generateTestData,
   nativeToObject,
-  type BenchmarkResult,
-  type BenchmarkConfig,
 } from "./utils.ts";
 
 export function run(): void {
@@ -15,11 +14,15 @@ export function run(): void {
   for (const { name, size, iterations } of dataSizes) {
     // Skip large dataset to avoid memory issues
     if (size > 1000) {
-      console.log(`⏭️ Skipping toObject benchmark for ${name} dataset (${size} items) to avoid memory issues\n`);
+      console.log(
+        `⏭️ Skipping toObject benchmark for ${name} dataset (${size} items) to avoid memory issues\n`,
+      );
       continue;
     }
 
-    console.log(`📊 Benchmarking toObject with ${name} dataset (${size} items, ${iterations} iterations):`);
+    console.log(
+      `📊 Benchmarking toObject with ${name} dataset (${size} items, ${iterations} iterations):`,
+    );
 
     const testData = generateTestData(size);
     const { map1, extMap1 } = testData;

@@ -92,7 +92,10 @@ export function nativeWhereKey<K, V>(map: Map<K, V>, predicate: (key: K) => bool
   return result;
 }
 
-export function nativeWhereValue<K, V>(map: Map<K, V>, predicate: (value: V) => boolean): Map<K, V> {
+export function nativeWhereValue<K, V>(
+  map: Map<K, V>,
+  predicate: (value: V) => boolean,
+): Map<K, V> {
   const result = new Map<K, V>();
   for (const [key, value] of map) {
     if (predicate(value)) {
@@ -102,7 +105,9 @@ export function nativeWhereValue<K, V>(map: Map<K, V>, predicate: (value: V) => 
   return result;
 }
 
-export function nativeToObject<K extends string | number | symbol, V>(map: Map<K, V>): Record<K, V> {
+export function nativeToObject<K extends string | number | symbol, V>(
+  map: Map<K, V>,
+): Record<K, V> {
   const obj = {} as Record<K, V>;
   for (const [key, value] of map) {
     obj[key] = value;

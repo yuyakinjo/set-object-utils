@@ -1,18 +1,19 @@
 import { ExtendedMap } from "../index.ts";
 import {
+  type BenchmarkResult,
   benchmark,
   dataSizes,
   formatResults,
   generateTestData,
-  type BenchmarkResult,
-  type BenchmarkConfig,
 } from "./utils.ts";
 
 export function run(): void {
   console.log("🔄 Running ExtendedMap Basic Operations Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
-    console.log(`📊 Benchmarking ExtendedMap basic operations with ${name} dataset (${size} items, ${iterations} iterations):`);
+    console.log(
+      `📊 Benchmarking ExtendedMap basic operations with ${name} dataset (${size} items, ${iterations} iterations):`,
+    );
 
     const testData = generateTestData(size);
     const { map1, extMap1 } = testData;

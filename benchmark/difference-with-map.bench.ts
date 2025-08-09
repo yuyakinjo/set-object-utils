@@ -1,19 +1,20 @@
 import { differenceWithMap } from "../index.ts";
 import {
+  type BenchmarkResult,
   benchmark,
   dataSizes,
   formatResults,
   generateTestData,
   nativeDifference,
-  type BenchmarkResult,
-  type BenchmarkConfig,
 } from "./utils.ts";
 
 export function run(): void {
   console.log("🔄 Running Difference With Map Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
-    console.log(`📊 Benchmarking differenceWithMap with ${name} dataset (${size} items, ${iterations} iterations):`);
+    console.log(
+      `📊 Benchmarking differenceWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+    );
 
     const testData = generateTestData(size);
     const { map1, map2, extMap1, extMap2 } = testData;
