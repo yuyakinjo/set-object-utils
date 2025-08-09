@@ -1,5 +1,5 @@
 {
-  "name": "set_object_utils",
+  "name": "set-object-utils",
   "version": "1.0.0",
   "description": "Utility library providing set operations on Map keys and values",
   "main": "index.ts",
