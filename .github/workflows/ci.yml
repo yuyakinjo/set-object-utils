@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        bun-version: ['1.1.38', 'latest']
+        bun-version: [ 'latest']
 
     steps:
       - name: Checkout repository
