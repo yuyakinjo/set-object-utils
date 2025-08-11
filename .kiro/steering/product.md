@@ -1,6 +1,6 @@
 # Product Overview
 
-**set_object_utils** is a TypeScript utility library that extends JavaScript's native Map with Set-like operations. It provides high-performance set operations (intersection, union, difference, etc.) while maintaining type safety and tree-shakeable design.
+**set-object-utils** is a TypeScript utility library that extends JavaScript's native Map with Set-like operations. It provides high-performance set operations (intersection, union, difference, etc.) while maintaining type safety and tree-shakeable design.
 
 ## Key Features
 

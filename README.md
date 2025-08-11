@@ -1,6 +1,6 @@
 # ExtendedMap - Set Operations for JavaScript Map
 
-![CI](https://github.com/yuyakinjo/set-object-utils/workflows/CI/badge.svg)
+![Build](https://github.com/yuyakinjo/set-object-utils/workflows/Build/badge.svg)
 ![Lint](https://github.com/yuyakinjo/set-object-utils/workflows/Lint/badge.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)
 ![Bun](https://img.shields.io/badge/Bun-Compatible-orange.svg)
@@ -20,13 +20,13 @@ A TypeScript-implemented extension library that adds Set-like operations to Map 
 
 ```bash
 # npm
-npm install set_object_utils
+npm install set-object-utils
 
 # bun
-bun add set_object_utils
+bun add set-object-utils
 
 # yarn
-yarn add set_object_utils
+yarn add set-object-utils
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ yarn add set_object_utils
 ### Basic Usage
 
 ```typescript
-import { ExtendedMap } from 'set_object_utils';
+import { ExtendedMap } from 'set-object-utils';
 
 // Create an ExtendedMap
 const map1 = new ExtendedMap([
@@ -57,7 +57,7 @@ console.log(intersection); // Map { 'b' => 2, 'c' => 3 }
 ### Using as Standalone Functions
 
 ```typescript
-import { intersectionWithMap } from 'set_object_utils';
+import { intersectionWithMap } from 'set-object-utils';
 
 const map1 = new Map([['a', 1], ['b', 2]]);
 const map2 = new Map([['b', 2], ['c', 3]]);
@@ -330,8 +330,8 @@ bun run benchmark/intersection-with-map.bench.ts
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/set_object_utils.git
-cd set_object_utils
+git clone https://github.com/yourusername/set-object-utils.git
+cd set-object-utils
 
 # Install dependencies
 bun install
@@ -366,7 +366,7 @@ bun run format
 ## Project Structure
 
 ```
-set_object_utils/
+set-object-utils/
 ├── src/                  # Source code
 │   ├── extended-map.ts   # Main class
 │   ├── types.ts          # Type definitions

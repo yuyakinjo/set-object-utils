@@ -3,7 +3,7 @@
 ## Directory Organization
 
 ```
-set_object_utils/
+set-object-utils/
 ├── src/                    # Core implementation
 │   ├── extended-map.ts     # Main ExtendedMap class
 │   ├── types.ts           # Type definitions
