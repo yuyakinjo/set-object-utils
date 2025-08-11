@@ -1,4 +1,4 @@
-import { symmetricDifferenceWithMap } from "../index.ts";
+import { symmetricDifference } from "../index.ts";
 import {
   type BenchmarkResult,
   benchmark,
@@ -29,11 +29,11 @@ function nativeSymmetricDifference<K, V>(map1: Map<K, V>, map2: Map<K, V>): Map<
 }
 
 export function run(): void {
-  console.log("🔄 Running Symmetric Difference With Map Benchmarks\n");
+  console.log("🔄 Running Symmetric Difference Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
     console.log(
-      `📊 Benchmarking symmetricDifferenceWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+      `📊 Benchmarking symmetricDifference with ${name} dataset (${size} items, ${iterations} iterations):`,
     );
 
     const testData = generateTestData(size);
@@ -41,16 +41,16 @@ export function run(): void {
 
     const results: BenchmarkResult[] = [
       benchmark(
-        "ExtendedMap.symmetricDifferenceWithMap (method)",
+        "ExtendedMap.symmetricDifference (method)",
         () => {
-          extMap1.symmetricDifferenceWithMap(extMap2);
+          extMap1.symmetricDifference(extMap2);
         },
         iterations,
       ),
       benchmark(
-        "symmetricDifferenceWithMap (function)",
+        "symmetricDifference (function)",
         () => {
-          symmetricDifferenceWithMap(extMap1, extMap2);
+          symmetricDifference(extMap1, extMap2);
         },
         iterations,
       ),
@@ -64,6 +64,6 @@ export function run(): void {
     ];
 
     formatResults(results);
-    console.log(`\n✅ Completed symmetricDifferenceWithMap benchmarks for ${name} dataset\n`);
+    console.log(`\n✅ Completed symmetricDifference benchmarks for ${name} dataset\n`);
   }
 }

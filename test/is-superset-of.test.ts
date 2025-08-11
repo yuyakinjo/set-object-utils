@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { ExtendedMap, isSupersetOfWithMap } from "../index";
+import { ExtendedMap, isSupersetOf } from "../index";
 
-describe("isSupersetOfWithMap", () => {
+describe("isSupersetOf", () => {
   it("should return true when map1 is a superset of map2", () => {
     const map1 = new Map([
       ["a", 1],
@@ -12,7 +12,7 @@ describe("isSupersetOfWithMap", () => {
       ["a", 1],
       ["b", 2],
     ]);
-    const result = isSupersetOfWithMap(map1, map2);
+    const result = isSupersetOf(map1, map2);
 
     expect(result).toBe(true);
   });
@@ -23,7 +23,7 @@ describe("isSupersetOfWithMap", () => {
       ["a", 1],
       ["b", 2],
     ]);
-    const result = isSupersetOfWithMap(map1, map2);
+    const result = isSupersetOf(map1, map2);
 
     expect(result).toBe(false);
   });
@@ -34,7 +34,7 @@ describe("isSupersetOfWithMap", () => {
       ["b", 2],
     ]);
     const map2 = new Map([["a", 1]]);
-    const result = map1.isSupersetOfWithMap(map2);
+    const result = map1.isSupersetOf(map2);
 
     expect(result).toBe(true);
   });

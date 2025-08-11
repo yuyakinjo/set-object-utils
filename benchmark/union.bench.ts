@@ -1,19 +1,19 @@
-import { intersectionWithMap } from "../index.ts";
+import { union } from "../index.ts";
 import {
   type BenchmarkResult,
   benchmark,
   dataSizes,
   formatResults,
   generateTestData,
-  nativeIntersection,
+  nativeUnion,
 } from "./utils.ts";
 
 export function run(): void {
-  console.log("🔄 Running Intersection With Map Benchmarks\n");
+  console.log("🔄 Running Union Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
     console.log(
-      `📊 Benchmarking intersectionWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+      `📊 Benchmarking union with ${name} dataset (${size} items, ${iterations} iterations):`,
     );
 
     const testData = generateTestData(size);
@@ -21,29 +21,29 @@ export function run(): void {
 
     const results: BenchmarkResult[] = [
       benchmark(
-        "ExtendedMap.intersectionWithMap (method)",
+        "ExtendedMap.union (method)",
         () => {
-          extMap1.intersectionWithMap(extMap2);
+          extMap1.union(extMap2);
         },
         iterations,
       ),
       benchmark(
-        "intersectionWithMap (function)",
+        "union (function)",
         () => {
-          intersectionWithMap(extMap1, extMap2);
+          union(extMap1, extMap2);
         },
         iterations,
       ),
       benchmark(
-        "Native Map intersection",
+        "Native Map union",
         () => {
-          nativeIntersection(map1, map2);
+          nativeUnion(map1, map2);
         },
         iterations,
       ),
     ];
 
     formatResults(results);
-    console.log(`\n✅ Completed intersectionWithMap benchmarks for ${name} dataset\n`);
+    console.log(`\n✅ Completed union benchmarks for ${name} dataset\n`);
   }
 }

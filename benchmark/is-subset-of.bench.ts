@@ -1,4 +1,4 @@
-import { isSubsetOfWithMap } from "../index.ts";
+import { isSubsetOf } from "../index.ts";
 import {
   type BenchmarkResult,
   benchmark,
@@ -18,11 +18,11 @@ function nativeIsSubsetOf<K, V>(map1: Map<K, V>, map2: Map<K, V>): boolean {
 }
 
 export function run(): void {
-  console.log("🔄 Running Is Subset Of With Map Benchmarks\n");
+  console.log("🔄 Running Is Subset Of Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
     console.log(
-      `📊 Benchmarking isSubsetOfWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+      `📊 Benchmarking isSubsetOf with ${name} dataset (${size} items, ${iterations} iterations):`,
     );
 
     const testData = generateTestData(size);
@@ -30,16 +30,16 @@ export function run(): void {
 
     const results: BenchmarkResult[] = [
       benchmark(
-        "ExtendedMap.isSubsetOfWithMap (method)",
+        "ExtendedMap.isSubsetOf (method)",
         () => {
-          extMap1.isSubsetOfWithMap(extMap2);
+          extMap1.isSubsetOf(extMap2);
         },
         iterations,
       ),
       benchmark(
-        "isSubsetOfWithMap (function)",
+        "isSubsetOf (function)",
         () => {
-          isSubsetOfWithMap(extMap1, extMap2);
+          isSubsetOf(extMap1, extMap2);
         },
         iterations,
       ),
@@ -53,6 +53,6 @@ export function run(): void {
     ];
 
     formatResults(results);
-    console.log(`\n✅ Completed isSubsetOfWithMap benchmarks for ${name} dataset\n`);
+    console.log(`\n✅ Completed isSubsetOf benchmarks for ${name} dataset\n`);
   }
 }

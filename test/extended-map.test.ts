@@ -92,24 +92,24 @@ describe("Edge Cases and Type Testing", () => {
     const map1 = new ExtendedMap([["a", 1]]);
     const map2 = new ExtendedMap([["a", 1]]);
 
-    expect(map1.intersectionWithMap(map2).size).toBe(1);
-    expect(map1.unionWithMap(map2).size).toBe(1);
+    expect(map1.intersection(map2).size).toBe(1);
+    expect(map1.union(map2).size).toBe(1);
     expect(map1.difference(map2).size).toBe(0);
-    expect(map1.isSubsetOfWithMap(map2)).toBe(true);
-    expect(map1.isSupersetOfWithMap(map2)).toBe(true);
-    expect(map1.isDisjointFromWithMap(map2)).toBe(false);
+    expect(map1.isSubsetOf(map2)).toBe(true);
+    expect(map1.isSupersetOf(map2)).toBe(true);
+    expect(map1.isDisjointFrom(map2)).toBe(false);
   });
 
   it("should handle operations with completely empty maps", () => {
     const empty1 = new ExtendedMap<string, number>();
     const empty2 = new ExtendedMap<string, number>();
 
-    expect(empty1.intersectionWithMap(empty2).size).toBe(0);
-    expect(empty1.unionWithMap(empty2).size).toBe(0);
+    expect(empty1.intersection(empty2).size).toBe(0);
+    expect(empty1.union(empty2).size).toBe(0);
     expect(empty1.difference(empty2).size).toBe(0);
-    expect(empty1.isSubsetOfWithMap(empty2)).toBe(true);
-    expect(empty1.isSupersetOfWithMap(empty2)).toBe(true);
-    expect(empty1.isDisjointFromWithMap(empty2)).toBe(true);
+    expect(empty1.isSubsetOf(empty2)).toBe(true);
+    expect(empty1.isSupersetOf(empty2)).toBe(true);
+    expect(empty1.isDisjointFrom(empty2)).toBe(true);
   });
 
   it("should maintain ExtendedMap type in chain operations", () => {
@@ -124,7 +124,7 @@ describe("Edge Cases and Type Testing", () => {
     ]);
 
     const result = map1
-      .unionWithMap(map2)
+      .union(map2)
       .whereValue((value) => value > 2)
       .difference(new Map([["c", 3]]));
 
@@ -145,13 +145,13 @@ describe("Performance and Large Data Edge Cases", () => {
     const map1 = new ExtendedMap(entries);
     const map2 = new ExtendedMap(entries.slice(500)); // second half
 
-    const intersection = map1.intersectionWithMap(map2);
-    const union = map1.unionWithMap(map2);
+    const intersection = map1.intersection(map2);
+    const union = map1.union(map2);
 
     expect(intersection.size).toBe(500);
     expect(union.size).toBe(1000);
-    expect(map1.isSubsetOfWithMap(union)).toBe(true);
-    expect(union.isSupersetOfWithMap(map2)).toBe(true);
+    expect(map1.isSubsetOf(union)).toBe(true);
+    expect(union.isSupersetOf(map2)).toBe(true);
   });
 
   it("should handle maps with duplicate values correctly", () => {
@@ -171,7 +171,7 @@ describe("Performance and Large Data Edge Cases", () => {
     expect(filtered.has("a")).toBe(true);
     expect(filtered.has("b")).toBe(true);
 
-    const union = map1.unionWithMap(map2);
+    const union = map1.union(map2);
     expect(union.size).toBe(6);
   });
 });

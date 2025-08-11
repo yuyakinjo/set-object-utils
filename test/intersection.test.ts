@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { ExtendedMap, intersectionWithMap } from "../index";
+import { ExtendedMap, intersection } from "../index";
 
-describe("intersectionWithMap", () => {
+describe("intersection", () => {
   it("should return intersection of two maps with matching key-value pairs", () => {
     const map1 = new Map([
       ["a", 1],
@@ -13,7 +13,7 @@ describe("intersectionWithMap", () => {
       ["b", 3],
       ["d", 4],
     ]);
-    const result = intersectionWithMap(map1, map2);
+    const result = intersection(map1, map2);
 
     expect(result.size).toBe(1);
     expect(result.get("a")).toBe(1);
@@ -29,7 +29,7 @@ describe("intersectionWithMap", () => {
       ["a", 2],
       ["c", 3],
     ]);
-    const result = intersectionWithMap(map1, map2);
+    const result = intersection(map1, map2);
 
     expect(result.size).toBe(0);
   });
@@ -37,7 +37,7 @@ describe("intersectionWithMap", () => {
   it("should handle empty maps", () => {
     const map1 = new Map<string, number>();
     const map2 = new Map([["a", 1]]);
-    const result = intersectionWithMap(map1, map2);
+    const result = intersection(map1, map2);
 
     expect(result.size).toBe(0);
   });
@@ -51,7 +51,7 @@ describe("intersectionWithMap", () => {
       ["a", 1],
       ["c", 3],
     ]);
-    const result = map1.intersectionWithMap(map2);
+    const result = map1.intersection(map2);
 
     expect(result.size).toBe(1);
     expect(result.get("a")).toBe(1);

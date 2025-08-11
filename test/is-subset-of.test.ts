@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { ExtendedMap, isSubsetOfWithMap } from "../index";
+import { ExtendedMap, isSubsetOf } from "../index";
 
-describe("isSubsetOfWithMap", () => {
+describe("isSubsetOf", () => {
   it("should return true when map1 is a subset of map2", () => {
     const map1 = new Map([
       ["a", 1],
@@ -12,7 +12,7 @@ describe("isSubsetOfWithMap", () => {
       ["b", 2],
       ["c", 3],
     ]);
-    const result = isSubsetOfWithMap(map1, map2);
+    const result = isSubsetOf(map1, map2);
 
     expect(result).toBe(true);
   });
@@ -27,7 +27,7 @@ describe("isSubsetOfWithMap", () => {
       ["b", 2],
       ["c", 3],
     ]);
-    const result = isSubsetOfWithMap(map1, map2);
+    const result = isSubsetOf(map1, map2);
 
     expect(result).toBe(false);
   });
@@ -41,7 +41,7 @@ describe("isSubsetOfWithMap", () => {
       ["a", 1],
       ["b", 2],
     ]);
-    const result = isSubsetOfWithMap(map1, map2);
+    const result = isSubsetOf(map1, map2);
 
     expect(result).toBe(false);
   });
@@ -49,7 +49,7 @@ describe("isSubsetOfWithMap", () => {
   it("should return true for empty map", () => {
     const map1 = new Map<string, number>();
     const map2 = new Map([["a", 1]]);
-    const result = isSubsetOfWithMap(map1, map2);
+    const result = isSubsetOf(map1, map2);
 
     expect(result).toBe(true);
   });
@@ -60,7 +60,7 @@ describe("isSubsetOfWithMap", () => {
       ["a", 1],
       ["b", 2],
     ]);
-    const result = map1.isSubsetOfWithMap(map2);
+    const result = map1.isSubsetOf(map2);
 
     expect(result).toBe(true);
   });

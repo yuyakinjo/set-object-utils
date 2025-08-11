@@ -1,13 +1,13 @@
 import { difference } from "./difference";
-import { intersectionWithMap } from "./intersection-with-map";
-import { isDisjointFromWithMap } from "./is-disjoint-from-with-map";
+import { intersection } from "./intersection";
+import { isDisjointFrom } from "./is-disjoint-from";
 import { isEmpty } from "./is-empty";
-import { isSubsetOfWithMap } from "./is-subset-of-with-map";
-import { isSupersetOfWithMap } from "./is-superset-of-with-map";
-import { symmetricDifferenceWithMap } from "./symmetric-difference-with-map";
+import { isSubsetOf } from "./is-subset-of";
+import { isSupersetOf } from "./is-superset-of";
+import { symmetricDifference } from "./symmetric-difference";
 import { toObject } from "./to-object";
 import type { ExtendedMapOptions, ObjectKey } from "./types";
-import { unionWithMap } from "./union-with-map";
+import { union } from "./union";
 import { whereKey } from "./where-key";
 import { whereValue } from "./where-value";
 
@@ -27,32 +27,32 @@ export class ExtendedMap<K, V> extends Map<K, V> {
   }
 
   // Set operations
-  intersectionWithMap(other: Map<K, V>): ExtendedMap<K, V> {
-    return intersectionWithMap(this, other);
+  intersection(other: Map<K, V>): ExtendedMap<K, V> {
+    return intersection(this, other);
   }
 
-  unionWithMap(other: Map<K, V>): ExtendedMap<K, V> {
-    return unionWithMap(this, other);
+  union(other: Map<K, V>): ExtendedMap<K, V> {
+    return union(this, other);
   }
 
   difference(other: Map<K, V>): ExtendedMap<K, V> {
     return difference(this, other);
   }
 
-  symmetricDifferenceWithMap(other: Map<K, V>): ExtendedMap<K, V> {
-    return symmetricDifferenceWithMap(this, other);
+  symmetricDifference(other: Map<K, V>): ExtendedMap<K, V> {
+    return symmetricDifference(this, other);
   }
 
-  isSubsetOfWithMap(other: Map<K, V>): boolean {
-    return isSubsetOfWithMap(this, other);
+  isSubsetOf(other: Map<K, V>): boolean {
+    return isSubsetOf(this, other);
   }
 
-  isSupersetOfWithMap(other: Map<K, V>): boolean {
-    return isSupersetOfWithMap(this, other);
+  isSupersetOf(other: Map<K, V>): boolean {
+    return isSupersetOf(this, other);
   }
 
-  isDisjointFromWithMap(other: Map<K, V>): boolean {
-    return isDisjointFromWithMap(this, other);
+  isDisjointFrom(other: Map<K, V>): boolean {
+    return isDisjointFrom(this, other);
   }
 
   // Additional methods

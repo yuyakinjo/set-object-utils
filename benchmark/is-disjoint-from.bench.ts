@@ -1,4 +1,4 @@
-import { isDisjointFromWithMap } from "../index.ts";
+import { isDisjointFrom } from "../index.ts";
 import {
   type BenchmarkResult,
   benchmark,
@@ -18,11 +18,11 @@ function nativeIsDisjointFrom<K, V>(map1: Map<K, V>, map2: Map<K, V>): boolean {
 }
 
 export function run(): void {
-  console.log("🔄 Running Is Disjoint From With Map Benchmarks\n");
+  console.log("🔄 Running Is Disjoint From Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
     console.log(
-      `📊 Benchmarking isDisjointFromWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+      `📊 Benchmarking isDisjointFrom with ${name} dataset (${size} items, ${iterations} iterations):`,
     );
 
     const testData = generateTestData(size);
@@ -30,16 +30,16 @@ export function run(): void {
 
     const results: BenchmarkResult[] = [
       benchmark(
-        "ExtendedMap.isDisjointFromWithMap (method)",
+        "ExtendedMap.isDisjointFrom (method)",
         () => {
-          extMap1.isDisjointFromWithMap(extMap2);
+          extMap1.isDisjointFrom(extMap2);
         },
         iterations,
       ),
       benchmark(
-        "isDisjointFromWithMap (function)",
+        "isDisjointFrom (function)",
         () => {
-          isDisjointFromWithMap(extMap1, extMap2);
+          isDisjointFrom(extMap1, extMap2);
         },
         iterations,
       ),
@@ -53,6 +53,6 @@ export function run(): void {
     ];
 
     formatResults(results);
-    console.log(`\n✅ Completed isDisjointFromWithMap benchmarks for ${name} dataset\n`);
+    console.log(`\n✅ Completed isDisjointFrom benchmarks for ${name} dataset\n`);
   }
 }

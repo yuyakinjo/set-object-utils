@@ -5,14 +5,14 @@ export { difference } from "./difference";
 // Default export for convenience
 export { ExtendedMap, ExtendedMap as default } from "./extended-map";
 // Re-export standalone functions
-export { intersectionWithMap } from "./intersection-with-map";
-export { isDisjointFromWithMap } from "./is-disjoint-from-with-map";
+export { intersection } from "./intersection";
+export { isDisjointFrom } from "./is-disjoint-from";
 export { isEmpty } from "./is-empty";
-export { isSubsetOfWithMap } from "./is-subset-of-with-map";
-export { isSupersetOfWithMap } from "./is-superset-of-with-map";
-export { symmetricDifferenceWithMap } from "./symmetric-difference-with-map";
+export { isSubsetOf } from "./is-subset-of";
+export { isSupersetOf } from "./is-superset-of";
+export { symmetricDifference } from "./symmetric-difference";
 export { toObject } from "./to-object";
 export type { ExtendedMapOptions, ObjectKey } from "./types";
-export { unionWithMap } from "./union-with-map";
+export { union } from "./union";
 export { whereKey } from "./where-key";
 export { whereValue } from "./where-value";

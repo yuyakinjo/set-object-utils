@@ -44,19 +44,19 @@ const map2 = new ExtendedMap([
 ]);
 
 // Execute Set operations
-const intersection = map1.intersectionWithMap(map2);
+const intersection = map1.intersection(map2);
 console.log(intersection); // Map { 'b' => 2, 'c' => 3 }
 ```
 
 ### Using as Standalone Functions
 
 ```typescript
-import { intersectionWithMap } from 'set-object-utils';
+import { intersection } from 'set-object-utils';
 
 const map1 = new Map([['a', 1], ['b', 2]]);
 const map2 = new Map([['b', 2], ['c', 3]]);
 
-const result = intersectionWithMap(map1, map2);
+const result = intersection(map1, map2);
 console.log(result); // ExtendedMap { 'b' => 2 }
 ```
 
@@ -74,7 +74,7 @@ console.log(mapWithDefault.get('not-exists'));  // 0 (default value)
 
 ### Set Operation Methods
 
-#### `intersectionWithMap(other: Map<K, V>): ExtendedMap<K, V>`
+#### `intersection(other: Map<K, V>): ExtendedMap<K, V>`
 
 Returns the intersection of two Maps. Contains only key-value pairs that exist in both Maps with the same values.
 
@@ -82,12 +82,12 @@ Returns the intersection of two Maps. Contains only key-value pairs that exist i
 const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
 const map2 = new ExtendedMap([['b', 2], ['c', 4], ['d', 5]]);
 
-const result = map1.intersectionWithMap(map2);
+const result = map1.intersection(map2);
 // Result: Map { 'b' => 2 }
 // Note: 'c' exists in both but has different values, so it's excluded
 ```
 
-#### `unionWithMap(other: Map<K, V>): ExtendedMap<K, V>`
+#### `union(other: Map<K, V>): ExtendedMap<K, V>`
 
 Returns the union of two Maps. For duplicate keys, values from the second Map overwrite the first.
 
@@ -95,7 +95,7 @@ Returns the union of two Maps. For duplicate keys, values from the second Map ov
 const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
 const map2 = new ExtendedMap([['b', 3], ['c', 4]]);
 
-const result = map1.unionWithMap(map2);
+const result = map1.union(map2);
 // Result: Map { 'a' => 1, 'b' => 3, 'c' => 4 }
 // Note: 'b' value is overwritten by map2's value (3)
 ```
@@ -113,7 +113,7 @@ const result = map1.difference(map2);
 // Note: 'b' is excluded due to exact match, 'c' remains due to different value
 ```
 
-#### `symmetricDifferenceWithMap(other: Map<K, V>): ExtendedMap<K, V>`
+#### `symmetricDifference(other: Map<K, V>): ExtendedMap<K, V>`
 
 Returns the symmetric difference of two Maps. Contains elements that exist in either Map but not both.
 
@@ -121,12 +121,12 @@ Returns the symmetric difference of two Maps. Contains elements that exist in ei
 const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
 const map2 = new ExtendedMap([['b', 2], ['c', 3]]);
 
-const result = map1.symmetricDifferenceWithMap(map2);
+const result = map1.symmetricDifference(map2);
 // Result: Map { 'a' => 1, 'c' => 3 }
 // Note: 'b' is excluded as it exists in both with the same value
 ```
 
-#### `isSubsetOfWithMap(other: Map<K, V>): boolean`
+#### `isSubsetOf(other: Map<K, V>): boolean`
 
 Determines whether the current Map is a subset of the specified Map.
 
@@ -134,11 +134,11 @@ Determines whether the current Map is a subset of the specified Map.
 const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
 const map2 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
 
-console.log(map1.isSubsetOfWithMap(map2));  // true
-console.log(map2.isSubsetOfWithMap(map1));  // false
+console.log(map1.isSubsetOf(map2));  // true
+console.log(map2.isSubsetOf(map1));  // false
 ```
 
-#### `isSupersetOfWithMap(other: Map<K, V>): boolean`
+#### `isSupersetOf(other: Map<K, V>): boolean`
 
 Determines whether the current Map is a superset of the specified Map.
 
@@ -146,11 +146,11 @@ Determines whether the current Map is a superset of the specified Map.
 const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
 const map2 = new ExtendedMap([['a', 1], ['b', 2]]);
 
-console.log(map1.isSupersetOfWithMap(map2));  // true
-console.log(map2.isSupersetOfWithMap(map1));  // false
+console.log(map1.isSupersetOf(map2));  // true
+console.log(map2.isSupersetOf(map1));  // false
 ```
 
-#### `isDisjointFromWithMap(other: Map<K, V>): boolean`
+#### `isDisjointFrom(other: Map<K, V>): boolean`
 
 Determines whether two Maps are disjoint (have no common elements).
 
@@ -159,8 +159,8 @@ const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
 const map2 = new ExtendedMap([['c', 3], ['d', 4]]);
 const map3 = new ExtendedMap([['a', 1], ['e', 5]]);
 
-console.log(map1.isDisjointFromWithMap(map2));  // true (no common elements)
-console.log(map1.isDisjointFromWithMap(map3));  // false ('a' => 1 is common)
+console.log(map1.isDisjointFrom(map2));  // true (no common elements)
+console.log(map1.isDisjointFrom(map3));  // false ('a' => 1 is common)
 ```
 
 ### Utility Methods
@@ -231,7 +231,7 @@ const map2 = new ExtendedMap([
 ]);
 
 const result = map1
-  .unionWithMap(map2)                    // Union
+  .union(map2)                           // Union
   .whereValue(value => value > 2)        // Elements with value > 2
   .difference(new Map([['e', 5]])); // Difference
 
@@ -273,7 +273,7 @@ const largeMap2 = new ExtendedMap(
 );
 
 // Efficient set operations
-const intersection = largeMap1.intersectionWithMap(largeMap2);
+const intersection = largeMap1.intersection(largeMap2);
 console.log(intersection.size); // 50000
 ```
 

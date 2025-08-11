@@ -1,4 +1,4 @@
-import { isSupersetOfWithMap } from "../index.ts";
+import { isSupersetOf } from "../index.ts";
 import {
   type BenchmarkResult,
   benchmark,
@@ -18,11 +18,11 @@ function nativeIsSupersetOf<K, V>(map1: Map<K, V>, map2: Map<K, V>): boolean {
 }
 
 export function run(): void {
-  console.log("🔄 Running Is Superset Of With Map Benchmarks\n");
+  console.log("🔄 Running Is Superset Of Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
     console.log(
-      `📊 Benchmarking isSupersetOfWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+      `📊 Benchmarking isSupersetOf with ${name} dataset (${size} items, ${iterations} iterations):`,
     );
 
     const testData = generateTestData(size);
@@ -30,16 +30,16 @@ export function run(): void {
 
     const results: BenchmarkResult[] = [
       benchmark(
-        "ExtendedMap.isSupersetOfWithMap (method)",
+        "ExtendedMap.isSupersetOf (method)",
         () => {
-          extMap1.isSupersetOfWithMap(extMap2);
+          extMap1.isSupersetOf(extMap2);
         },
         iterations,
       ),
       benchmark(
-        "isSupersetOfWithMap (function)",
+        "isSupersetOf (function)",
         () => {
-          isSupersetOfWithMap(extMap1, extMap2);
+          isSupersetOf(extMap1, extMap2);
         },
         iterations,
       ),
@@ -53,6 +53,6 @@ export function run(): void {
     ];
 
     formatResults(results);
-    console.log(`\n✅ Completed isSupersetOfWithMap benchmarks for ${name} dataset\n`);
+    console.log(`\n✅ Completed isSupersetOf benchmarks for ${name} dataset\n`);
   }
 }

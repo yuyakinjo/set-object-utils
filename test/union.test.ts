@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { ExtendedMap, unionWithMap } from "../index";
+import { ExtendedMap, union } from "../index";
 
-describe("unionWithMap", () => {
+describe("union", () => {
   it("should combine two maps, with map2 values overriding map1", () => {
     const map1 = new Map([
       ["a", 1],
@@ -11,7 +11,7 @@ describe("unionWithMap", () => {
       ["b", 3],
       ["c", 4],
     ]);
-    const result = unionWithMap(map1, map2);
+    const result = union(map1, map2);
 
     expect(result.size).toBe(3);
     expect(result.get("a")).toBe(1);
@@ -22,7 +22,7 @@ describe("unionWithMap", () => {
   it("should handle empty maps", () => {
     const map1 = new Map([["a", 1]]);
     const map2 = new Map<string, number>();
-    const result = unionWithMap(map1, map2);
+    const result = union(map1, map2);
 
     expect(result.size).toBe(1);
     expect(result.get("a")).toBe(1);
@@ -31,7 +31,7 @@ describe("unionWithMap", () => {
   it("should work with ExtendedMap class method", () => {
     const map1 = new ExtendedMap([["a", 1]]);
     const map2 = new Map([["b", 2]]);
-    const result = map1.unionWithMap(map2);
+    const result = map1.union(map2);
 
     expect(result.size).toBe(2);
     expect(result.get("a")).toBe(1);

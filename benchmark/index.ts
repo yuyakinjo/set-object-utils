@@ -8,13 +8,13 @@
 
 import * as differenceBench from "./difference.bench.ts";
 import * as extendedMapBench from "./extended-map.bench.ts";
-import * as intersectionBench from "./intersection-with-map.bench.ts";
-import * as isDisjointFromBench from "./is-disjoint-from-with-map.bench.ts";
-import * as isSubsetOfBench from "./is-subset-of-with-map.bench.ts";
-import * as isSupersetOfBench from "./is-superset-of-with-map.bench.ts";
-import * as symmetricDifferenceBench from "./symmetric-difference-with-map.bench.ts";
+import * as intersectionBench from "./intersection.bench.ts";
+import * as isDisjointFromBench from "./is-disjoint-from.bench.ts";
+import * as isSubsetOfBench from "./is-subset-of.bench.ts";
+import * as isSupersetOfBench from "./is-superset-of.bench.ts";
+import * as symmetricDifferenceBench from "./symmetric-difference.bench.ts";
 import * as toObjectBench from "./to-object.bench.ts";
-import * as unionBench from "./union-with-map.bench.ts";
+import * as unionBench from "./union.bench.ts";
 import * as whereKeyBench from "./where-key.bench.ts";
 import * as whereValueBench from "./where-value.bench.ts";
 
