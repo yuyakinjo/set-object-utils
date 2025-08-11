@@ -71,4 +71,15 @@ export class ExtendedMap<K, V> extends Map<K, V> {
   isEmpty(): boolean {
     return isEmpty(this);
   }
+
+  has(key: K): boolean {
+    return super.has(key);
+  }
+
+  getAsserted(key: K): V {
+    if (!this.has(key)) {
+      throw new Error(`Key "${String(key)}" does not exist in map`);
+    }
+    return super.get(key) as V;
+  }
 }
