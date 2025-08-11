@@ -303,6 +303,30 @@ const result = map.whereValue(value => value > 20);
 // Result: Map { 'b' => 25, 'c' => 30 }
 ```
 
+#### `getAsserted(key: K): V`
+
+Returns the value for a key, throwing an error if the key does not exist. Useful when you've already verified existence with `has()` and want to avoid undefined checks.
+
+```typescript
+const map = new ExtendedMap([
+  ['existing', 'value'],
+  ['another', 'data']
+]);
+
+// Safe usage after checking with has()
+if (map.has('existing')) {
+  const value = map.getAsserted('existing'); // Returns 'value' (type: string, not string | undefined)
+  console.log(value.toUpperCase()); // No TypeScript error
+}
+
+// Direct usage (throws if key doesn't exist)
+try {
+  const value = map.getAsserted('nonexistent');
+} catch (error) {
+  console.error(error); // Error: Key "nonexistent" does not exist in map
+}
+```
+
 ## Advanced Usage Examples
 
 ### Method Chaining
