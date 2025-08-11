@@ -1,4 +1,4 @@
-import { differenceWithMap } from "./difference-with-map";
+import { difference } from "./difference";
 import { intersectionWithMap } from "./intersection-with-map";
 import { isDisjointFromWithMap } from "./is-disjoint-from-with-map";
 import { isEmpty } from "./is-empty";
@@ -35,8 +35,8 @@ export class ExtendedMap<K, V> extends Map<K, V> {
     return unionWithMap(this, other);
   }
 
-  differenceWithMap(other: Map<K, V>): ExtendedMap<K, V> {
-    return differenceWithMap(this, other);
+  difference(other: Map<K, V>): ExtendedMap<K, V> {
+    return difference(this, other);
   }
 
   symmetricDifferenceWithMap(other: Map<K, V>): ExtendedMap<K, V> {

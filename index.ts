@@ -1,6 +1,6 @@
 // Re-export types
 
-export { differenceWithMap } from "./src/difference-with-map";
+export { difference } from "./src/difference";
 // Re-export ExtendedMap class
 // Default export for convenience
 export { ExtendedMap, ExtendedMap as default } from "./src/extended-map";

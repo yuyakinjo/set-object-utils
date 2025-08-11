@@ -1,4 +1,4 @@
-import { differenceWithMap } from "../index.ts";
+import { difference } from "../index.ts";
 import {
   type BenchmarkResult,
   benchmark,
@@ -9,11 +9,11 @@ import {
 } from "./utils.ts";
 
 export function run(): void {
-  console.log("🔄 Running Difference With Map Benchmarks\n");
+  console.log("🔄 Running Difference Benchmarks\n");
 
   for (const { name, size, iterations } of dataSizes) {
     console.log(
-      `📊 Benchmarking differenceWithMap with ${name} dataset (${size} items, ${iterations} iterations):`,
+      `📊 Benchmarking difference with ${name} dataset (${size} items, ${iterations} iterations):`,
     );
 
     const testData = generateTestData(size);
@@ -21,16 +21,16 @@ export function run(): void {
 
     const results: BenchmarkResult[] = [
       benchmark(
-        "ExtendedMap.differenceWithMap (method)",
+        "ExtendedMap.difference (method)",
         () => {
-          extMap1.differenceWithMap(extMap2);
+          extMap1.difference(extMap2);
         },
         iterations,
       ),
       benchmark(
-        "differenceWithMap (function)",
+        "difference (function)",
         () => {
-          differenceWithMap(extMap1, extMap2);
+          difference(extMap1, extMap2);
         },
         iterations,
       ),
@@ -44,6 +44,6 @@ export function run(): void {
     ];
 
     formatResults(results);
-    console.log(`\n✅ Completed differenceWithMap benchmarks for ${name} dataset\n`);
+    console.log(`\n✅ Completed difference benchmarks for ${name} dataset\n`);
   }
 }

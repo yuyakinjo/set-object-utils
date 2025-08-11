@@ -100,7 +100,7 @@ const result = map1.unionWithMap(map2);
 // Note: 'b' value is overwritten by map2's value (3)
 ```
 
-#### `differenceWithMap(other: Map<K, V>): ExtendedMap<K, V>`
+#### `difference(other: Map<K, V>): ExtendedMap<K, V>`
 
 Returns the difference of the first Map minus matching elements from the second Map.
 
@@ -108,7 +108,7 @@ Returns the difference of the first Map minus matching elements from the second 
 const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
 const map2 = new ExtendedMap([['b', 2], ['c', 4]]);
 
-const result = map1.differenceWithMap(map2);
+const result = map1.difference(map2);
 // Result: Map { 'a' => 1, 'c' => 3 }
 // Note: 'b' is excluded due to exact match, 'c' remains due to different value
 ```
@@ -233,7 +233,7 @@ const map2 = new ExtendedMap([
 const result = map1
   .unionWithMap(map2)                    // Union
   .whereValue(value => value > 2)        // Elements with value > 2
-  .differenceWithMap(new Map([['e', 5]])); // Difference
+  .difference(new Map([['e', 5]])); // Difference
 
 console.log(result); // Map { 'c' => 3, 'd' => 4 }
 ```

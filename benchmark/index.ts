@@ -6,7 +6,7 @@
  * comparing ExtendedMap methods vs standalone functions vs native implementations.
  */
 
-import * as differenceBench from "./difference-with-map.bench.ts";
+import * as differenceBench from "./difference.bench.ts";
 import * as extendedMapBench from "./extended-map.bench.ts";
 import * as intersectionBench from "./intersection-with-map.bench.ts";
 import * as isDisjointFromBench from "./is-disjoint-from-with-map.bench.ts";

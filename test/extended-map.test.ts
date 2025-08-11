@@ -94,7 +94,7 @@ describe("Edge Cases and Type Testing", () => {
 
     expect(map1.intersectionWithMap(map2).size).toBe(1);
     expect(map1.unionWithMap(map2).size).toBe(1);
-    expect(map1.differenceWithMap(map2).size).toBe(0);
+    expect(map1.difference(map2).size).toBe(0);
     expect(map1.isSubsetOfWithMap(map2)).toBe(true);
     expect(map1.isSupersetOfWithMap(map2)).toBe(true);
     expect(map1.isDisjointFromWithMap(map2)).toBe(false);
@@ -106,7 +106,7 @@ describe("Edge Cases and Type Testing", () => {
 
     expect(empty1.intersectionWithMap(empty2).size).toBe(0);
     expect(empty1.unionWithMap(empty2).size).toBe(0);
-    expect(empty1.differenceWithMap(empty2).size).toBe(0);
+    expect(empty1.difference(empty2).size).toBe(0);
     expect(empty1.isSubsetOfWithMap(empty2)).toBe(true);
     expect(empty1.isSupersetOfWithMap(empty2)).toBe(true);
     expect(empty1.isDisjointFromWithMap(empty2)).toBe(true);
@@ -126,7 +126,7 @@ describe("Edge Cases and Type Testing", () => {
     const result = map1
       .unionWithMap(map2)
       .whereValue((value) => value > 2)
-      .differenceWithMap(new Map([["c", 3]]));
+      .difference(new Map([["c", 3]]));
 
     expect(result).toBeInstanceOf(ExtendedMap);
     expect(result.size).toBe(1);

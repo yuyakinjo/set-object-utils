@@ -113,7 +113,7 @@ describe("isEmpty", () => {
     expect(unionWithEmpty.isEmpty()).toBe(false);
 
     // Test after difference that results in empty
-    const difference = map.differenceWithMap(map);
+    const difference = map.difference(map);
     expect(difference.isEmpty()).toBe(true);
 
     // Test after intersection that results in empty
