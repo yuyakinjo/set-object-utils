@@ -4,65 +4,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a TypeScript utility library that extends the native Map object with Set-like operations. The project uses Bun as the runtime and test runner.
-
-## Key Architectural Decision: Inheritance vs Functions
-
-The main architectural decision to discuss and implement is whether to:
-1. **Extend Map class through inheritance** - Create a new class that extends Map with additional methods
-2. **Use utility functions** - Create pure functions that operate on Map instances
-
-This decision affects type safety, performance, and API design.
+TypeScript utility library extending native Map with Set-like operations. Uses Bun runtime/test runner and Biome for linting/formatting.
 
 ## Development Commands
 
 ```bash
-# Run tests
-bun test
+# Testing
+bun test                    # Run all tests
+bun test:watch             # Run tests in watch mode
+bun test test/[file].test.ts  # Run specific test file
 
-# Run tests in watch mode
-bun test --watch
+# Code Quality
+bun run lint               # Check code with Biome
+bun run lint:fix          # Fix linting issues
+bun run format            # Format code with Biome
+bun run typecheck         # TypeScript type checking (no emit)
 
-# Type checking (no emit)
-bun run lint
-
-# Run example code
-bun run example
-
-# Benchmark performance (to be implemented)
-bun run benchmark
+# Development
+bun run example           # Run index.ts
+bun run benchmark         # Run all benchmarks
+bun run benchmark/[file].bench.ts  # Run specific benchmark
 ```
 
-## Implementation Requirements
+## Architecture
 
-### Extended Map Methods (Set Operations)
-- All Set methods should be prefixed with `withMap` (e.g., `intersectionWithMap`)
-- Methods to implement:
-  - `intersectionWithMap` - Returns intersection of Map keys/values
-  - `unionWithMap` - Returns union of Map keys/values
-  - `differenceWithMap` - Returns difference of Map keys/values
-  - `symmetricDifferenceWithMap` - Returns symmetric difference
-  - `isSubsetOfWithMap` - Checks if one Map is subset of another
-  - `isSupersetOfWithMap` - Checks if one Map is superset of another
-  - `isDisjointFromWithMap` - Checks if Maps have no common elements
+### Hybrid Design Pattern
+The codebase uses a hybrid approach combining class inheritance with standalone functions:
+- **ExtendedMap class** (`src/extended-map.ts`): Extends native Map, delegates to standalone functions
+- **Standalone functions** (`src/*.ts`): Pure functions that operate on Map instances, enabling tree-shaking
+- This pattern provides both OOP convenience and functional programming flexibility
 
-### Additional Methods
-- `toObject()` - Convert Map to plain object
-- `whereKey(predicate)` - Filter Map by key predicate
-- `whereValue(predicate)` - Filter Map by value predicate
-- Default value support in constructor (e.g., `new ExtendedMap({default: 1})`)
+### Module Structure
+- Each Set operation is implemented in its own module for tree-shaking
+- All functions return `ExtendedMap` instances to enable method chaining
+- Type definitions in `src/types.ts` ensure consistency
 
-## Type Safety Requirements
-- Use strict TypeScript types throughout
-- Ensure proper generic type inference
-- No `any` types unless absolutely necessary
+### Key Implementation Details
+- **Default values**: ExtendedMap constructor accepts options with default value support
+- **Value equality**: Set operations compare both keys AND values (not just keys)
+- **Performance**: Operations use native Map iteration for optimal performance
+- **Type safety**: Strict TypeScript with `noUncheckedIndexedAccess` enabled
 
 ## Testing Strategy
-- Write tests for every method using Bun's test runner
-- Test edge cases (empty Maps, single elements, type edge cases)
-- Test default value behavior
+- Each operation has dedicated test file in `test/` directory
+- Tests cover edge cases: empty Maps, single elements, value mismatches
+- Default value behavior is tested in `extended-map.test.ts`
 
-## Performance Considerations
-- Benchmark different implementation approaches
-- Consider memory efficiency for large Maps
-- Use native JavaScript features where possible (no external libraries)
+## Benchmarking
+- Performance benchmarks in `benchmark/` directory
+- Utilities in `benchmark/utils.ts` for consistent test data generation
+- Benchmarks test various Map sizes (10, 1000, 100000 items)
