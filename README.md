@@ -232,6 +232,19 @@ console.log(map2.isSupersetOf(map1));  // false
 
 Determines whether two Maps are disjoint (have no common elements).
 
+```
+     Map A           Map B
+   ┌─────────┐   ┌─────────┐
+   │*********│   │         │
+   │*********│   │         │
+   │*********│   │*********│
+   │*********│   │*********│
+   │*********│   │*********│
+   │*********│   │*********│
+   └─────────┘   └─────────┘
+     A ∩ B = ∅ (Disjoint: true)
+```
+
 ```typescript
 const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
 const map2 = new ExtendedMap([['c', 3], ['d', 4]]);
