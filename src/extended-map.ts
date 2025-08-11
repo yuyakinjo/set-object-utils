@@ -1,6 +1,7 @@
 import { differenceWithMap } from "./difference-with-map";
 import { intersectionWithMap } from "./intersection-with-map";
 import { isDisjointFromWithMap } from "./is-disjoint-from-with-map";
+import { isEmpty } from "./is-empty";
 import { isSubsetOfWithMap } from "./is-subset-of-with-map";
 import { isSupersetOfWithMap } from "./is-superset-of-with-map";
 import { symmetricDifferenceWithMap } from "./symmetric-difference-with-map";
@@ -65,5 +66,9 @@ export class ExtendedMap<K, V> extends Map<K, V> {
 
   whereValue(predicate: (value: V) => boolean): ExtendedMap<K, V> {
     return whereValue(this, predicate);
+  }
+
+  isEmpty(): boolean {
+    return isEmpty(this);
   }
 }
