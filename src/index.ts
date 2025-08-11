@@ -7,6 +7,7 @@ export { ExtendedMap, ExtendedMap as default } from "./extended-map";
 // Re-export standalone functions
 export { intersectionWithMap } from "./intersection-with-map";
 export { isDisjointFromWithMap } from "./is-disjoint-from-with-map";
+export { isEmpty } from "./is-empty";
 export { isSubsetOfWithMap } from "./is-subset-of-with-map";
 export { isSupersetOfWithMap } from "./is-superset-of-with-map";
 export { symmetricDifferenceWithMap } from "./symmetric-difference-with-map";
