@@ -207,6 +207,19 @@ console.log(map2.isSubsetOf(map1));  // false
 
 Determines whether the current Map is a superset of the specified Map.
 
+```
+     Map A           Map B
+   ┌─────────┐   ┌─────────┐
+   │*********│   │         │
+   │****┌────┼───┼────┐    │
+   │****│****│***│****│    │
+   │****│****│***│****│    │
+   │****└────┼───┼────┘    │
+   │*********│   │         │
+   └─────────┘   └─────────┘
+     A ⊇ B: true (A is superset of B)
+```
+
 ```typescript
 const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
 const map2 = new ExtendedMap([['a', 1], ['b', 2]]);
