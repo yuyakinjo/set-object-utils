@@ -21,12 +21,6 @@ A TypeScript-implemented extension library that adds Set-like operations to Map 
 ```bash
 # npm
 npm install set-object-utils
-
-# bun
-bun add set-object-utils
-
-# yarn
-yarn add set-object-utils
 ```
 
 ## Usage
