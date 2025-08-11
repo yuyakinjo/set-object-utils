@@ -78,6 +78,19 @@ console.log(mapWithDefault.get('not-exists'));  // 0 (default value)
 
 Returns the intersection of two Maps. Contains only key-value pairs that exist in both Maps with the same values.
 
+```
+     Map A           Map B
+   ┌─────────┐   ┌─────────┐
+   │         │   │         │
+   │    ┌────┼───┼────┐    │
+   │    │****│***│****│    │
+   │    │****│***│****│    │
+   │    └────┼───┼────┘    │
+   │         │   │         │
+   └─────────┘   └─────────┘
+        Result: *** (A ∩ B)
+```
+
 ```typescript
 const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
 const map2 = new ExtendedMap([['b', 2], ['c', 4], ['d', 5]]);
@@ -90,6 +103,19 @@ const result = map1.intersection(map2);
 #### `union(other: Map<K, V>): ExtendedMap<K, V>`
 
 Returns the union of two Maps. For duplicate keys, values from the second Map overwrite the first.
+
+```
+     Map A           Map B
+   ┌─────────┐   ┌─────────┐
+   │*********│   │*********│
+   │****┌────┼───┼────┐****│
+   │****│****│***│****│****│
+   │****│****│***│****│****│
+   │****└────┼───┼────┘****│
+   │*********│   │*********│
+   └─────────┘   └─────────┘
+     Result: ********* (A ∪ B)
+```
 
 ```typescript
 const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
@@ -104,6 +130,19 @@ const result = map1.union(map2);
 
 Returns the difference of the first Map minus matching elements from the second Map.
 
+```
+     Map A           Map B
+   ┌─────────┐   ┌─────────┐
+   │*********│   │         │
+   │****┌────┼───┼────┐    │
+   │****│    │   │    │    │
+   │****│    │   │    │    │
+   │****└────┼───┼────┘    │
+   │*********│   │         │
+   └─────────┘   └─────────┘
+     Result: **** (A - B)
+```
+
 ```typescript
 const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
 const map2 = new ExtendedMap([['b', 2], ['c', 4]]);
@@ -117,6 +156,19 @@ const result = map1.difference(map2);
 
 Returns the symmetric difference of two Maps. Contains elements that exist in either Map but not both.
 
+```
+     Map A           Map B
+   ┌─────────┐   ┌─────────┐
+   │*********│   │*********│
+   │****┌────┼───┼────┐****│
+   │****│    │   │    │****│
+   │****│    │   │    │****│
+   │****└────┼───┼────┘****│
+   │*********│   │*********│
+   └─────────┘   └─────────┘
+     Result: ******** (A △ B)
+```
+
 ```typescript
 const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
 const map2 = new ExtendedMap([['b', 2], ['c', 3]]);
@@ -129,6 +181,19 @@ const result = map1.symmetricDifference(map2);
 #### `isSubsetOf(other: Map<K, V>): boolean`
 
 Determines whether the current Map is a subset of the specified Map.
+
+```
+     Map A           Map B
+   ┌─────────┐   ┌─────────┐
+   │         │   │*********│
+   │    ┌────┼───┼────┐****│
+   │    │****│***│****│****│
+   │    │****│***│****│****│
+   │    └────┼───┼────┘****│
+   │         │   │*********│
+   └─────────┘   └─────────┘
+     A ⊆ B: true (A is subset of B)
+```
 
 ```typescript
 const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
