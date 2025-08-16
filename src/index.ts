@@ -12,6 +12,7 @@ export { isSubsetOf } from "./is-subset-of";
 export { isSupersetOf } from "./is-superset-of";
 export { symmetricDifference } from "./symmetric-difference";
 export { toObject } from "./to-object";
+export { tryGet } from "./try-get";
 export type { ExtendedMapOptions, ObjectKey } from "./types";
 export { union } from "./union";
 export { whereKey } from "./where-key";

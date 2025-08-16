@@ -51,13 +51,20 @@ console.log(intersection); // Map { 'b' => 2, 'c' => 3 }
 ### Using as Standalone Functions
 
 ```typescript
-import { intersection } from 'set-object-utils';
+import { intersection, tryGet } from 'set-object-utils';
 
 const map1 = new Map([['a', 1], ['b', 2]]);
 const map2 = new Map([['b', 2], ['c', 3]]);
 
 const result = intersection(map1, map2);
 console.log(result); // ExtendedMap { 'b' => 2 }
+
+// Using tryGet with regular Map instances
+const config = new Map([['theme', 'dark'], ['debug', true]]);
+const theme = tryGet(config, 'theme', 'light');
+const timeout = tryGet(config, 'timeout', 5000);
+console.log(theme);   // 'dark'
+console.log(timeout); // 5000
 ```
 
 ### Default Value Support
@@ -325,6 +332,67 @@ try {
 } catch (error) {
   console.error(error); // Error: Key "nonexistent" does not exist in map
 }
+```
+
+#### `tryGet(key: K): [true, V] | [false, undefined]`
+
+Returns a tuple indicating whether the key exists and its value. This pattern provides type-safe access to Map values without requiring separate `has()` and `get()` calls.
+
+```typescript
+const map = new ExtendedMap([
+  ['user1', { id: 1, name: 'Alice' }],
+  ['user2', { id: 2, name: 'Bob' }]
+]);
+
+// Using tryGet with destructuring
+const [found, user] = map.tryGet('user1');
+if (found) {
+  // TypeScript knows 'user' is the object type, not undefined
+  console.log(user.name.toUpperCase()); // 'ALICE'
+}
+
+// Pattern matching style
+const result = map.tryGet('user2');
+if (result[0]) {
+  const user = result[1]; // Type is inferred correctly
+  console.log(`User ${user.id}: ${user.name}`);
+}
+
+// Non-existing key
+const [exists, value] = map.tryGet('user3');
+console.log(exists); // false
+console.log(value);  // undefined
+```
+
+#### `tryGet(key: K, fallback: V): V`
+
+Returns the value for the given key if it exists, otherwise returns the fallback value. This overload provides a convenient way to get values with defaults without needing to check existence separately.
+
+```typescript
+const map = new ExtendedMap([
+  ['theme', 'dark'],
+  ['language', 'en'],
+  ['timeout', 5000]
+]);
+
+// Get existing values
+const theme = map.tryGet('theme', 'light');
+console.log(theme); // 'dark'
+
+// Get with fallback for missing keys
+const debug = map.tryGet('debug', false);
+console.log(debug); // false
+
+const maxRetries = map.tryGet('maxRetries', 3);
+console.log(maxRetries); // 3
+
+// Useful for configuration objects
+const config = {
+  theme: map.tryGet('theme', 'light'),
+  language: map.tryGet('language', 'en'),
+  debug: map.tryGet('debug', false),
+  timeout: map.tryGet('timeout', 30000)
+};
 ```
 
 ## Advanced Usage Examples

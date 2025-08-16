@@ -1,3 +1,5 @@
+// Original imports - preserved for compatibility with current runtime
+// Note: TypeScript 5.9 import defer version available in extended-map-deferred.ts
 import { difference } from "./difference";
 import { intersection } from "./intersection";
 import { isDisjointFrom } from "./is-disjoint-from";
@@ -6,6 +8,7 @@ import { isSubsetOf } from "./is-subset-of";
 import { isSupersetOf } from "./is-superset-of";
 import { symmetricDifference } from "./symmetric-difference";
 import { toObject } from "./to-object";
+import { tryGet as tryGetFunction } from "./try-get";
 import type { ExtendedMapOptions, ObjectKey } from "./types";
 import { union } from "./union";
 import { whereKey } from "./where-key";
@@ -81,5 +84,21 @@ export class ExtendedMap<K, V> extends Map<K, V> {
       throw new Error(`Key "${String(key)}" does not exist in map`);
     }
     return super.get(key) as V;
+  }
+
+  // Method overloads for tryGet
+  tryGet(key: K): [true, V] | [false, undefined];
+  tryGet(key: K, fallback: V): V;
+  tryGet(key: K, fallback?: V): [true, V] | [false, undefined] | V {
+    if (fallback !== undefined) {
+      // Fallback pattern: return value or fallback
+      return tryGetFunction(this, key, fallback);
+    }
+
+    // Tuple pattern: return [found, value]
+    if (this.has(key)) {
+      return [true, super.get(key) as V];
+    }
+    return [false, undefined];
   }
 }
