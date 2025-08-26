@@ -7,6 +7,17 @@
 
 A TypeScript-implemented extension library that adds Set-like operations to Map objects. Provides high-performance set operations with a tree-shakeable design while avoiding circular dependencies.
 
+## 📚 Full Documentation
+
+**[👉 Visit the complete documentation site](https://yuyakinjo.github.io/set-object-utils/)**
+
+The documentation includes:
+- 🚀 [Getting Started Guide](https://yuyakinjo.github.io/set-object-utils/docs/getting-started)
+- 📖 [Complete API Reference](https://yuyakinjo.github.io/set-object-utils/docs/api/set-operations)
+- 💡 [Advanced Usage Examples](https://yuyakinjo.github.io/set-object-utils/docs/examples/advanced-usage)
+- ⚡ [Performance Benchmarks](https://yuyakinjo.github.io/set-object-utils/docs/benchmarks)
+- 🛠️ [Development Guide](https://yuyakinjo.github.io/set-object-utils/docs/development)
+
 ## Features
 
 - 🚀 **High Performance**: Extends native Map while maintaining performance
@@ -16,21 +27,20 @@ A TypeScript-implemented extension library that adds Set-like operations to Map 
 - ⚡ **Bun Compatible**: Optimized for Bun runtime
 - 🧪 **Fully Tested**: Comprehensive tests for all features
 
-## Installation
+## Quick Start
+
+### Installation
 
 ```bash
-# npm
 npm install set-object-utils
 ```
-
-## Usage
 
 ### Basic Usage
 
 ```typescript
 import { ExtendedMap } from 'set-object-utils';
 
-// Create an ExtendedMap
+// Create ExtendedMaps
 const map1 = new ExtendedMap([
   ['a', 1],
   ['b', 2],
@@ -43,12 +53,15 @@ const map2 = new ExtendedMap([
   ['d', 4]
 ]);
 
-// Execute Set operations
+// Set operations
 const intersection = map1.intersection(map2);
 console.log(intersection); // Map { 'b' => 2, 'c' => 3 }
+
+const union = map1.union(map2);
+console.log(union); // Map { 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4 }
 ```
 
-### Using as Standalone Functions
+### Standalone Functions
 
 ```typescript
 import { intersection, tryGet } from 'set-object-utils';
@@ -59,513 +72,76 @@ const map2 = new Map([['b', 2], ['c', 3]]);
 const result = intersection(map1, map2);
 console.log(result); // ExtendedMap { 'b' => 2 }
 
-// Using tryGet with regular Map instances
-const config = new Map([['theme', 'dark'], ['debug', true]]);
-const theme = tryGet(config, 'theme', 'light');
-const timeout = tryGet(config, 'timeout', 5000);
-console.log(theme);   // 'dark'
-console.log(timeout); // 5000
+// Safe value access with fallback
+const config = new Map([['theme', 'dark']]);
+const theme = tryGet(config, 'theme', 'light'); // 'dark'
+const timeout = tryGet(config, 'timeout', 5000); // 5000 (fallback)
 ```
 
-### Default Value Support
+## Available Operations
 
-```typescript
-const mapWithDefault = new ExtendedMap(null, { default: 0 });
-
-mapWithDefault.set('exists', 42);
-console.log(mapWithDefault.get('exists'));      // 42
-console.log(mapWithDefault.get('not-exists'));  // 0 (default value)
-```
-
-## API Reference
-
-### Set Operation Methods
-
-#### `intersection(other: Map<K, V>): ExtendedMap<K, V>`
-
-Returns the intersection of two Maps. Contains only key-value pairs that exist in both Maps with the same values.
-
-```
-     Map A           Map B
-   ┌─────────┐   ┌─────────┐
-   │         │   │         │
-   │    ┌────┼───┼────┐    │
-   │    │****│***│****│    │
-   │    │****│***│****│    │
-   │    └────┼───┼────┘    │
-   │         │   │         │
-   └─────────┘   └─────────┘
-        Result: *** (A ∩ B)
-```
-
-```typescript
-const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
-const map2 = new ExtendedMap([['b', 2], ['c', 4], ['d', 5]]);
-
-const result = map1.intersection(map2);
-// Result: Map { 'b' => 2 }
-// Note: 'c' exists in both but has different values, so it's excluded
-```
-
-#### `union(other: Map<K, V>): ExtendedMap<K, V>`
-
-Returns the union of two Maps. For duplicate keys, values from the second Map overwrite the first.
-
-```
-     Map A           Map B
-   ┌─────────┐   ┌─────────┐
-   │*********│   │*********│
-   │****┌────┼───┼────┐****│
-   │****│****│***│****│****│
-   │****│****│***│****│****│
-   │****└────┼───┼────┘****│
-   │*********│   │*********│
-   └─────────┘   └─────────┘
-     Result: ********* (A ∪ B)
-```
-
-```typescript
-const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
-const map2 = new ExtendedMap([['b', 3], ['c', 4]]);
-
-const result = map1.union(map2);
-// Result: Map { 'a' => 1, 'b' => 3, 'c' => 4 }
-// Note: 'b' value is overwritten by map2's value (3)
-```
-
-#### `difference(other: Map<K, V>): ExtendedMap<K, V>`
-
-Returns the difference of the first Map minus matching elements from the second Map.
-
-```
-     Map A           Map B
-   ┌─────────┐   ┌─────────┐
-   │*********│   │         │
-   │****┌────┼───┼────┐    │
-   │****│    │   │    │    │
-   │****│    │   │    │    │
-   │****└────┼───┼────┘    │
-   │*********│   │         │
-   └─────────┘   └─────────┘
-     Result: **** (A - B)
-```
-
-```typescript
-const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
-const map2 = new ExtendedMap([['b', 2], ['c', 4]]);
-
-const result = map1.difference(map2);
-// Result: Map { 'a' => 1, 'c' => 3 }
-// Note: 'b' is excluded due to exact match, 'c' remains due to different value
-```
-
-#### `symmetricDifference(other: Map<K, V>): ExtendedMap<K, V>`
-
-Returns the symmetric difference of two Maps. Contains elements that exist in either Map but not both.
-
-```
-     Map A           Map B
-   ┌─────────┐   ┌─────────┐
-   │*********│   │*********│
-   │****┌────┼───┼────┐****│
-   │****│    │   │    │****│
-   │****│    │   │    │****│
-   │****└────┼───┼────┘****│
-   │*********│   │*********│
-   └─────────┘   └─────────┘
-     Result: ******** (A △ B)
-```
-
-```typescript
-const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
-const map2 = new ExtendedMap([['b', 2], ['c', 3]]);
-
-const result = map1.symmetricDifference(map2);
-// Result: Map { 'a' => 1, 'c' => 3 }
-// Note: 'b' is excluded as it exists in both with the same value
-```
-
-#### `isSubsetOf(other: Map<K, V>): boolean`
-
-Determines whether the current Map is a subset of the specified Map.
-
-```
-     Map A           Map B
-   ┌─────────┐   ┌─────────┐
-   │         │   │*********│
-   │    ┌────┼───┼────┐****│
-   │    │****│***│****│****│
-   │    │****│***│****│****│
-   │    └────┼───┼────┘****│
-   │         │   │*********│
-   └─────────┘   └─────────┘
-     A ⊆ B: true (A is subset of B)
-```
-
-```typescript
-const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
-const map2 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
-
-console.log(map1.isSubsetOf(map2));  // true
-console.log(map2.isSubsetOf(map1));  // false
-```
-
-#### `isSupersetOf(other: Map<K, V>): boolean`
-
-Determines whether the current Map is a superset of the specified Map.
-
-```
-     Map A           Map B
-   ┌─────────┐   ┌─────────┐
-   │*********│   │         │
-   │****┌────┼───┼────┐    │
-   │****│****│***│****│    │
-   │****│****│***│****│    │
-   │****└────┼───┼────┘    │
-   │*********│   │         │
-   └─────────┘   └─────────┘
-     A ⊇ B: true (A is superset of B)
-```
-
-```typescript
-const map1 = new ExtendedMap([['a', 1], ['b', 2], ['c', 3]]);
-const map2 = new ExtendedMap([['a', 1], ['b', 2]]);
-
-console.log(map1.isSupersetOf(map2));  // true
-console.log(map2.isSupersetOf(map1));  // false
-```
-
-#### `isDisjointFrom(other: Map<K, V>): boolean`
-
-Determines whether two Maps are disjoint (have no common elements).
-
-```
-     Map A           Map B
-   ┌─────────┐   ┌─────────┐
-   │*********│   │         │
-   │*********│   │         │
-   │*********│   │*********│
-   │*********│   │*********│
-   │*********│   │*********│
-   │*********│   │*********│
-   └─────────┘   └─────────┘
-     A ∩ B = ∅ (Disjoint: true)
-```
-
-```typescript
-const map1 = new ExtendedMap([['a', 1], ['b', 2]]);
-const map2 = new ExtendedMap([['c', 3], ['d', 4]]);
-const map3 = new ExtendedMap([['a', 1], ['e', 5]]);
-
-console.log(map1.isDisjointFrom(map2));  // true (no common elements)
-console.log(map1.isDisjointFrom(map3));  // false ('a' => 1 is common)
-```
+### Set Operations
+- `intersection()` - Elements in both maps
+- `union()` - All elements from both maps
+- `difference()` - Elements in first map only
+- `symmetricDifference()` - Elements in either map but not both
+- `isSubsetOf()` - Check if subset
+- `isSupersetOf()` - Check if superset
+- `isDisjointFrom()` - Check if no common elements
 
 ### Utility Methods
+- `tryGet()` - Safe value access with optional fallback
+- `getAsserted()` - Get value or throw if missing
+- `whereKey()` - Filter by key predicate
+- `whereValue()` - Filter by value predicate
+- `toObject()` - Convert to plain object
+- `isEmpty()` - Check if empty
 
-#### `toObject(): Record<K, V>`
+## Performance
 
-Converts a Map to a plain JavaScript object.
+ExtendedMap is optimized for various dataset sizes:
 
-```typescript
-const map = new ExtendedMap([
-  ['name', 'Alice'],
-  ['age', 30],
-  ['city', 'Tokyo']
-]);
+- **Small datasets** (< 100 items): ~1M+ operations/sec
+- **Medium datasets** (1K items): ~30K+ operations/sec
+- **Large datasets** (100K items): ~100+ operations/sec
 
-const obj = map.toObject();
-// Result: { name: 'Alice', age: 30, city: 'Tokyo' }
-```
-
-#### `whereKey(predicate: (key: K) => boolean): ExtendedMap<K, V>`
-
-Returns a new Map containing only elements where the key satisfies the predicate.
-
-```typescript
-const map = new ExtendedMap([
-  ['apple', 100],
-  ['banana', 200],
-  ['apricot', 300],
-  ['grape', 400]
-]);
-
-const result = map.whereKey(key => key.startsWith('a'));
-// Result: Map { 'apple' => 100, 'apricot' => 300 }
-```
-
-#### `whereValue(predicate: (value: V) => boolean): ExtendedMap<K, V>`
-
-Returns a new Map containing only elements where the value satisfies the predicate.
-
-```typescript
-const map = new ExtendedMap([
-  ['a', 10],
-  ['b', 25],
-  ['c', 30],
-  ['d', 15]
-]);
-
-const result = map.whereValue(value => value > 20);
-// Result: Map { 'b' => 25, 'c' => 30 }
-```
-
-#### `getAsserted(key: K): V`
-
-Returns the value for a key, throwing an error if the key does not exist. Useful when you've already verified existence with `has()` and want to avoid undefined checks.
-
-```typescript
-const map = new ExtendedMap([
-  ['existing', 'value'],
-  ['another', 'data']
-]);
-
-// Safe usage after checking with has()
-if (map.has('existing')) {
-  const value = map.getAsserted('existing'); // Returns 'value' (type: string, not string | undefined)
-  console.log(value.toUpperCase()); // No TypeScript error
-}
-
-// Direct usage (throws if key doesn't exist)
-try {
-  const value = map.getAsserted('nonexistent');
-} catch (error) {
-  console.error(error); // Error: Key "nonexistent" does not exist in map
-}
-```
-
-#### `tryGet(key: K): [true, V] | [false, undefined]`
-
-Returns a tuple indicating whether the key exists and its value. This pattern provides type-safe access to Map values without requiring separate `has()` and `get()` calls.
-
-```typescript
-const map = new ExtendedMap([
-  ['user1', { id: 1, name: 'Alice' }],
-  ['user2', { id: 2, name: 'Bob' }]
-]);
-
-// Using tryGet with destructuring
-const [found, user] = map.tryGet('user1');
-if (found) {
-  // TypeScript knows 'user' is the object type, not undefined
-  console.log(user.name.toUpperCase()); // 'ALICE'
-}
-
-// Pattern matching style
-const result = map.tryGet('user2');
-if (result[0]) {
-  const user = result[1]; // Type is inferred correctly
-  console.log(`User ${user.id}: ${user.name}`);
-}
-
-// Non-existing key
-const [exists, value] = map.tryGet('user3');
-console.log(exists); // false
-console.log(value);  // undefined
-```
-
-#### `tryGet(key: K, fallback: V): V`
-
-Returns the value for the given key if it exists, otherwise returns the fallback value. This overload provides a convenient way to get values with defaults without needing to check existence separately.
-
-```typescript
-const map = new ExtendedMap([
-  ['theme', 'dark'],
-  ['language', 'en'],
-  ['timeout', 5000]
-]);
-
-// Get existing values
-const theme = map.tryGet('theme', 'light');
-console.log(theme); // 'dark'
-
-// Get with fallback for missing keys
-const debug = map.tryGet('debug', false);
-console.log(debug); // false
-
-const maxRetries = map.tryGet('maxRetries', 3);
-console.log(maxRetries); // 3
-
-// Useful for configuration objects
-const config = {
-  theme: map.tryGet('theme', 'light'),
-  language: map.tryGet('language', 'en'),
-  debug: map.tryGet('debug', false),
-  timeout: map.tryGet('timeout', 30000)
-};
-```
-
-## Advanced Usage Examples
-
-### Method Chaining
-
-```typescript
-const map1 = new ExtendedMap([
-  ['a', 1],
-  ['b', 2],
-  ['c', 3],
-  ['d', 4]
-]);
-
-const map2 = new ExtendedMap([
-  ['b', 2],
-  ['d', 4],
-  ['e', 5]
-]);
-
-const result = map1
-  .union(map2)                           // Union
-  .whereValue(value => value > 2)        // Elements with value > 2
-  .difference(new Map([['e', 5]])); // Difference
-
-console.log(result); // Map { 'c' => 3, 'd' => 4 }
-```
-
-### Using with Complex Data Types
-
-```typescript
-interface User {
-  id: number;
-  name: string;
-  active: boolean;
-}
-
-const users = new ExtendedMap<string, User>([
-  ['user1', { id: 1, name: 'Alice', active: true }],
-  ['user2', { id: 2, name: 'Bob', active: false }],
-  ['user3', { id: 3, name: 'Charlie', active: true }]
-]);
-
-// Extract active users only
-const activeUsers = users.whereValue(user => user.active);
-
-// Find users with specific IDs
-const adminUsers = users.whereValue(user => user.id < 2);
-```
-
-### Performance Optimization
-
-```typescript
-// Usage with large datasets
-const largeMap1 = new ExtendedMap(
-  Array.from({ length: 100000 }, (_, i) => [`key${i}`, i])
-);
-
-const largeMap2 = new ExtendedMap(
-  Array.from({ length: 100000 }, (_, i) => [`key${i + 50000}`, i])
-);
-
-// Efficient set operations
-const intersection = largeMap1.intersection(largeMap2);
-console.log(intersection.size); // 50000
-```
-
-## Type Definitions
-
-```typescript
-// Basic types
-type ObjectKey = string | number | symbol;
-
-// Option settings
-interface ExtendedMapOptions<V> {
-  default?: V;  // Default value
-}
-
-// ExtendedMap class
-class ExtendedMap<K, V> extends Map<K, V> {
-  constructor(
-    entries?: Iterable<readonly [K, V]> | null,
-    options?: ExtendedMapOptions<V>
-  );
-  // ... methods
-}
-```
-
-## Benchmarks
-
-Run performance tests:
-
-```bash
-# Run all benchmarks
-bun run benchmark
-
-# Benchmark specific features
-bun run benchmark/intersection-with-map.bench.ts
-```
-
-### Performance Results Example
-
-| Operation | Small (10 items) | Medium (1000 items) | Large (100000 items) |
-|-----------|------------------|---------------------|----------------------|
-| Intersection | ~900K ops/sec | ~35K ops/sec | ~150 ops/sec |
-| Union | ~800K ops/sec | ~30K ops/sec | ~120 ops/sec |
-| Difference | ~850K ops/sec | ~32K ops/sec | ~140 ops/sec |
-
-## Development
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/set-object-utils.git
-cd set-object-utils
-
-# Install dependencies
-bun install
-```
-
-### Testing
-
-```bash
-# Run all tests
-bun test
-
-# Test in watch mode
-bun test:watch
-
-# Run specific test file
-bun test test/intersection-with-map.test.ts
-```
-
-### Build
-
-```bash
-# TypeScript type checking
-bun run typecheck
-
-# Linting
-bun run lint
-
-# Formatting
-bun run format
-```
+Run benchmarks: `bun run benchmark`
 
 ## Project Structure
 
 ```
 set-object-utils/
 ├── src/                  # Source code
-│   ├── extended-map.ts   # Main class
-│   ├── types.ts          # Type definitions
-│   └── *.ts              # Feature implementations
-├── test/                 # Test files
-│   └── *.test.ts         # Feature tests
-├── benchmark/            # Benchmarks
-│   ├── utils.ts          # Common utilities
-│   └── *.bench.ts        # Feature benchmarks
+├── test/                 # Tests
+├── benchmark/            # Performance benchmarks
+├── docs/                 # Documentation site
 └── index.ts              # Entry point
 ```
+
+## Development
+
+```bash
+# Install dependencies
+bun install
+
+# Run tests
+bun test
+
+# Run benchmarks
+bun run benchmark
+
+# Start documentation site
+cd docs && npm start
+```
+
+## Contributing
+
+Pull requests are welcome! Please see our [Development Guide](https://yuyakinjo.github.io/set-object-utils/docs/development) for details.
 
 ## License
 
 MIT
 
-## Contributing
+---
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
-## References
-
-- [MDN - Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
-- [MDN - Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+**[📚 Read the full documentation →](https://yuyakinjo.github.io/set-object-utils/)**
